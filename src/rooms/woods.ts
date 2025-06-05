@@ -18,13 +18,15 @@ export async function woods(state: GameState, user_interface: UserInterface) {
     switch (response) {
         case "a": {
             user_interface.clear();    
-            user_interface.write_line("You stumble forwards. And snap a twig under your feet. Now the howling sound is much closer and you are surrounded by red eyes")    
+            user_interface.write_line("You stumble forwards. And snap a twig under your feet. Now, the howling sound is much closer and you are surrounded by red eyes.")    
+            user_interface.write_line("Its a pack of hungry wolves - you tried to put up a fight but they were just too strong.")    
             user_interface.write_line("**************GAME OVER**************");        
             break;
         }
          case "b": {
             user_interface.clear();    
-            user_interface.write_line("You head towards the sound. You twitch your head back and forth. The sound is all around you. Now the howling sound is much closer and you are surrounded by red eyes")    
+            user_interface.write_line("You head towards the sound. You twitch your head back and forth. The sound is all around you. Now, the howling sound is much closer and you are surrounded by red eyes")    
+            user_interface.write_line("Its a pack of hungry wolves - you tried to put up a fight but they were just too strong.")   
             user_interface.write_line("**************GAME OVER**************");          
             break;
         }
