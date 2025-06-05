@@ -1,0 +1,29 @@
+{
+  "name": "rupert_game",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.ts",
+  "type": "module",
+  "scripts": {
+    "start": "NODE_NO_WARNINGS=1 node --loader ts-node/esm index.ts",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/roomanald1/rupert_game.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/roomanald1/rupert_game/issues"
+  },
+  "homepage": "https://github.com/roomanald1/rupert_game#readme",
+  "dependencies": {
+    "ts-node": "^10.9.2",
+    "tsc": "^2.0.4"
+  },
+  "devDependencies": {
+    "@types/node": "^22.15.29"
+  }
+}
