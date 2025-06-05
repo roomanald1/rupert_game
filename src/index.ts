@@ -9,7 +9,7 @@ const user_interface = new UserInterface();
 user_interface.clear()
 user_interface.write_line("******************************");
 user_interface.write_line("Welcome to the world of 'THE GAME'");
-user_interface.write_line("Press any Key to start");
+user_interface.write_line("Press Enter to start");
 user_interface.write_line("******************************");
 
 user_interface.ask_question("").then(() => entrance_room(state, user_interface))

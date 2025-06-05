@@ -18,11 +18,11 @@ export async function the_garden(state: GameState, user_interface: UserInterface
 
     switch (response) {
         case "a": {
-            entrance_room(state, user_interface);
+            await entrance_room(state, user_interface);
             break;
         }
         case "b": {
-            woods(state, user_interface);
+            await woods(state, user_interface);
             break;
         }
         case "c": {
@@ -31,6 +31,11 @@ export async function the_garden(state: GameState, user_interface: UserInterface
         }
         case "d": {
             user_interface.write_line("You rummage through your pockets for a penny. You find one and flick it between you thumb and index finger into the fountain.....")
+            user_interface.write_line("You take a closer look at the penny. And right next to it is a key. You pick up the key")
+            state.add_item("key")
+            await user_interface.ask_question("Enter to return to garden");
+            the_garden(state, user_interface)
+
             break;
         }
         default:

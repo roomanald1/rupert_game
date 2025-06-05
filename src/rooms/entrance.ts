@@ -1,5 +1,6 @@
 import { GameState } from "../game-state";
 import { UserInterface } from "../user-interface";
+import { cave } from "./cave";
 import { the_garden } from "./garden";
 
 export async function entrance_room(state: GameState, user_interface: UserInterface) {
@@ -42,6 +43,8 @@ export async function entrance_room(state: GameState, user_interface: UserInterf
         case "d":
             {
                 user_interface.show_message("Stroking the antlers..... Wait a minute.... This is a lever to open a secret door under the stairs!");
+                user_interface.show_message("You open the door and follow the stairs downwards.");
+                cave(state, user_interface);
                 break;
             }
         default:
