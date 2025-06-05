@@ -1,12 +1,15 @@
 {
   "compilerOptions": {
-    "rootDir": "src",
-    "outDir": "dist",
-    "strict": true,
-    "target": "ESNext",
     "module": "ESNext",
-    "sourceMap": true,
+    "moduleResolution": "Node",
+    "target": "ESNext",
+    "outDir": "dist",
+    "rootDir": "src",
+    "allowJs": true,
     "esModuleInterop": true,
-    "moduleResolution": "node"
-  }
+    "resolveJsonModule": true
+  }, 
+  "exclude": ["rspack.config.mjs"],
+  "include": ["src/**/*"],
+
 }
