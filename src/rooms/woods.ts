@@ -1,10 +1,20 @@
-import { GameState } from "../game-state"
+/* import { Room } from "../engine";
+import { GameState, Items, Rooms } from "../game-state"
 import { UserInterface } from "../user-interface"
 import { the_garden } from "./garden";
 
+export class Woods extends Room {
+    visit(state: GameState): Promise<Rooms> {
+        throw new Error("Method not implemented.");
+    }
+    getRoomName(): Rooms {
+        throw new Error("Method not implemented.");
+    }
+}
+
 export async function woods(state: GameState, user_interface: UserInterface) {
     user_interface.clear();
-    state.update_rooms_visited("woods");
+    state.update_rooms_visited(Rooms.woods);
 
     let response = await user_interface.ask_question("You are now in the Woods\r\n\
         The woods are dense. Its dark.\r\n\
@@ -17,7 +27,7 @@ export async function woods(state: GameState, user_interface: UserInterface) {
 
     switch (response) {
         case "a": {
-            if(state.has_item("sword")){
+            if(state.has_item(Items.sword)){
                 user_interface.clear();    
                 user_interface.write_line("You stumble forwards. And snap a twig under your feet. Now, the howling sound is much closer and you are surrounded by red eyes.")    
                 user_interface.write_line("Its a pack of hungry wolves - You brandish your sword - and defeat the wolves");
@@ -45,4 +55,4 @@ export async function woods(state: GameState, user_interface: UserInterface) {
                 user_interface.show_message(`I didnt understand what you typed ${response}`)
             }
     }
-}
+} */

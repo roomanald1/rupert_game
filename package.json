@@ -20,6 +20,7 @@
   },
   "homepage": "https://github.com/roomanald1/rupert_game#readme",
   "dependencies": {
+    "readline-promise": "^1.0.5",
     "ts-node": "^10.9.2",
     "tsc": "^2.0.4"
   },

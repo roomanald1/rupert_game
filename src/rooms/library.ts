@@ -1,9 +1,8 @@
-import { GameState } from "../game-state"
+/* import { GameState, Items, Rooms } from "../game-state"
 import { UserInterface } from "../user-interface"
-import { entrance_room } from "./entrance";
 
 export async function library(state: GameState, user_interface: UserInterface) {
-    state.update_rooms_visited("library");
+    state.update_rooms_visited(Rooms.library);
 
     let response = await user_interface.ask_question("You are now in the library\r\n\
         \r\n\
@@ -48,7 +47,7 @@ export async function bookcase(state: GameState, user_interface: UserInterface) 
             user_interface.clear()
             user_interface.show_message("This looks like a spell book. That might come in handy")
             user_interface.show_message("Added book to items")
-            state.add_item("perfume_book")
+            state.add_item(Items.perfume_book)
             library(state, user_interface)
             break;
         }
@@ -67,4 +66,4 @@ export async function bookcase(state: GameState, user_interface: UserInterface) 
                 user_interface.show_message(`I didnt understand what you typed ${response}`)
             }
     }
-}
+} */

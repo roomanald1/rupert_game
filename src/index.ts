@@ -1,15 +1,11 @@
 
-import { GameState } from './game-state';
-import { entrance_room } from './rooms/entrance';
+import { GameEngine } from './engine';
+import { GameState, Rooms } from './game-state';
+import { rooms } from './rooms/rooms';
 import { UserInterface } from './user-interface';
 
-const state= new GameState();
 const user_interface = new UserInterface();
+const state= new GameState();
+const engine = new GameEngine(state, user_interface, rooms)
 
-user_interface.clear()
-user_interface.write_line("******************************");
-user_interface.write_line("Welcome to the world of 'THE GAME'");
-user_interface.write_line("Press Enter to start");
-user_interface.write_line("******************************");
-
-user_interface.ask_question("").then(() => entrance_room(state, user_interface))
+engine.start(Rooms.entrance);
