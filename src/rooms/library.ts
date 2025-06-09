@@ -67,3 +67,29 @@ export async function bookcase(state: GameState, user_interface: UserInterface) 
             }
     }
 } */
+
+    import { GameEngine, Room } from "../engine";
+    import { Rooms } from "../game-state";
+    
+    export class Library implements Room {
+        async visit(engine: GameEngine): Promise<void> {
+            engine.user_interface.write_line("You are now in the library");
+            await engine.user_interface.ask_question("What would you like to do?",
+                [
+                    { optionDescription: "Look at bookcase", action: async () => await this.look_at_bookcase(engine)  },
+                    { optionDescription: "Head back upstairs", action: async () => engine.move_to_room(Rooms.cave) },
+                ]
+            )
+        }    
+
+        private async look_at_bookcase(engine:GameEngine){
+            await engine.user_interface.ask_question("What would you like to do?",
+                    [
+                        { optionDescription: "Perfume 101 - A wizards guide", action: async () => this.look_at_bookcase(engine)  },
+                        { optionDescription: "Bad Dad - David Walliams", action: async () => {
+                            engine.user_interface.write_line
+                        } },
+                    ]
+                )
+            }
+    }

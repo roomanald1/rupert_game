@@ -65,12 +65,12 @@ export class Entrance implements Room {
 
 
         await engine.user_interface.ask_question("What would you like to do?",
-            {
-                "a": { optionDescription: "Walk up the stairs", action: async () => await engine.move_to_room(Rooms.cave) },
-                "b": { optionDescription: "Open the door marked 'garden'", action: async () => this.garden(engine) },
-                "c": { optionDescription: "Go through the double doors", action: () => this.double_doors(engine) },
-                "d": { optionDescription: !engine.has_visited_room(Rooms.cave) ? "Have a closer look at the moose" : "Enter the cave", action: () => this.look_at_moose(engine) },
-            }
+            [
+                { optionDescription: "Walk up the stairs", action: async () => await engine.move_to_room(Rooms.cave) },
+                { optionDescription: "Open the door marked 'garden'", action: async () => this.garden(engine) },
+                { optionDescription: "Go through the double doors", action: () => this.double_doors(engine) },
+                { optionDescription: !engine.has_visited_room(Rooms.cave) ? "Have a closer look at the moose" : "Enter the cave", action: () => this.look_at_moose(engine) },
+            ]
         )
     }
 

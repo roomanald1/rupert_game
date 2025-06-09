@@ -1,58 +1,29 @@
-/* import { Room } from "../engine";
-import { GameState, Items, Rooms } from "../game-state"
-import { UserInterface } from "../user-interface"
-import { the_garden } from "./garden";
+import { GameEngine, Room } from "../engine";
+import { Items, Rooms } from "../game-state";
 
-export class Woods extends Room {
-    visit(state: GameState): Promise<Rooms> {
-        throw new Error("Method not implemented.");
+export class Woods implements Room {
+    async visit(engine: GameEngine): Promise<void> {
+        engine.user_interface.write_line("You are now in the Woods\r\n\The woods are dense. Its dark.\r\n\You cannot see much. You hear a creepy howling from the far right.");
+        await engine.user_interface.ask_question("What would you like to do?",
+            [
+                { optionDescription: "This is too creepy. Head back to the garden", action: async () => engine.move_to_room(Rooms.garden) },
+                { optionDescription: "Stumble Forwards", action: async () => this.encounter_wolves(engine) },
+                { optionDescription: "Follow the sound", action: async () => this.encounter_wolves(engine) },
+            ]
+        )
     }
-    getRoomName(): Rooms {
-        throw new Error("Method not implemented.");
+
+    encounter_wolves(engine: GameEngine) {
+        if (engine.has_item(Items.sword)) {
+            engine.user_interface.clear();
+            engine.user_interface.write_line("You stumble forwards. And snap a twig under your feet. Now, the howling sound is much closer and you are surrounded by red eyes.")
+            engine.user_interface.write_line("Its a pack of hungry wolves - You brandish your sword - and defeat the wolves");
+            this.visit(engine)
+        } else {
+            engine.user_interface.clear();
+            engine.user_interface.write_line("You walk forwards. And snap a twig under your feet. Now, the howling sound is much closer and you are surrounded by red eyes.")
+            engine.end("Its a pack of hungry wolves - you tried to put up a fight but they were just too strong")
+        }
     }
+
 }
-
-export async function woods(state: GameState, user_interface: UserInterface) {
-    user_interface.clear();
-    state.update_rooms_visited(Rooms.woods);
-
-    let response = await user_interface.ask_question("You are now in the Woods\r\n\
-        The woods are dense. Its dark.\r\n\
-        You cannot see much. You hear a creepy howling from the far right. \r\n\
-        \r\n\
-        What would you like to do?  \r\n\
-        [A] - Stumble forwards \r\n\
-        [B] - Follow the sound \r\n\
-        [C] - This is too creepy. Head back to the garden \r\n")
-
-    switch (response) {
-        case "a": {
-            if(state.has_item(Items.sword)){
-                user_interface.clear();    
-                user_interface.write_line("You stumble forwards. And snap a twig under your feet. Now, the howling sound is much closer and you are surrounded by red eyes.")    
-                user_interface.write_line("Its a pack of hungry wolves - You brandish your sword - and defeat the wolves");
-            }else {
-                user_interface.clear();    
-                user_interface.write_line("You stumble forwards. And snap a twig under your feet. Now, the howling sound is much closer and you are surrounded by red eyes.")    
-                user_interface.write_line("Its a pack of hungry wolves - you tried to put up a fight but they were just too strong.")    
-                user_interface.write_line("**************GAME OVER**************");        
-            }
-            break;
-        }
-         case "b": {
-            user_interface.clear();    
-            user_interface.write_line("You head towards the sound. You twitch your head back and forth. The sound is all around you. Now, the howling sound is much closer and you are surrounded by red eyes")    
-            user_interface.write_line("Its a pack of hungry wolves - you tried to put up a fight but they were just too strong.")   
-            user_interface.write_line("**************GAME OVER**************");          
-            break;
-        }
-         case "c": {
-            the_garden(state, user_interface);
-            break;
-        }
-        default:
-            {
-                user_interface.show_message(`I didnt understand what you typed ${response}`)
-            }
-    }
-} */

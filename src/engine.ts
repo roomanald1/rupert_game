@@ -1,3 +1,4 @@
+import figlet, { fonts } from "figlet";
 import { GameState, Items, Rooms } from "./game-state";
 import { UserInterface } from "./user-interface";
 
@@ -17,8 +18,10 @@ export class GameEngine {
 
     async start(init_room: Rooms) {
         this.user_interface.clear()
+        let welcome_msg = figlet.textSync("THE GAME", "3D-ASCII")
+
         this.user_interface.write_line("******************************");
-        this.user_interface.write_line("Welcome to the world of 'THE GAME'");
+        this.user_interface.write_line(welcome_msg);
         this.user_interface.write_line("******************************");
         this.user_interface.write_line("Press Enter to start");
 
@@ -56,6 +59,7 @@ export class GameEngine {
         this.user_interface.write_line("___________________")
         this.user_interface.write_line("    GAME OVER")
         this.user_interface.write_line("___________________")
+        this.user_interface.end()
     }
 }
 

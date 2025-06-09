@@ -73,12 +73,12 @@ export class Cave implements Room {
         engine.user_interface.write_line("in front of you is an old beaten up crate");
 
         await engine.user_interface.ask_question("What would you like to do?",
-            {
-                "a": { optionDescription: "Move back to Entrance", action: () => this.move_back_to_entrance(engine) },
-                "b": { optionDescription: "Open the crate", action: async () => this.open_the_crate(engine) },
-                "c": { optionDescription: "Inspect trapdoor", action: async () => engine.user_interface.write_line("You choose c") },
-                "d": { optionDescription: "Head down the stairs", action: async () => engine.user_interface.write_line("You choose d") },
-            }
+            [
+                { optionDescription: "Move back to Entrance", action: () => this.move_back_to_entrance(engine) },
+                { optionDescription: "Open the crate", action: async () => this.open_the_crate(engine) },
+                { optionDescription: "Inspect trapdoor", action: async () => engine.user_interface.write_line("You choose c") },
+                { optionDescription: "Head down the stairs", action: async () => engine.move_to_room(Rooms.library) },
+            ]
         )
     }
 

@@ -58,12 +58,12 @@ export class Garden implements Room {
 
 
         await engine.user_interface.ask_question("What would you like to do?",
-            {
-                "a": { optionDescription: "Head back to entrance hall", action: async () => engine.move_to_room(Rooms.entrance)  },
-                "b": { optionDescription: "Explore the woods", action: async () => engine.move_to_room(Rooms.woods) },
-                "c": { optionDescription: "Look around the rose garden", action: async () => engine.move_to_room(Rooms.rose_garden) },
-                "d": { optionDescription: "Throw a penny in the fountain", action: () => this.throw_penny_in_fountain(engine)},
-            }
+            [
+                { optionDescription: "Head back to entrance hall", action: async () => engine.move_to_room(Rooms.entrance)  },
+                { optionDescription: "Explore the woods", action: async () => engine.move_to_room(Rooms.woods) },
+                { optionDescription: "Look around the rose garden", action: async () => engine.move_to_room(Rooms.rose_garden) },
+                { optionDescription: "Throw a penny in the fountain", action: () => this.throw_penny_in_fountain(engine)},
+            ]
         )
     }
 

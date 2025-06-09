@@ -1,3 +1,4 @@
+import inquirer from 'inquirer';
 import readline from 'readline/promises';
 
 const rl = readline.createInterface({
@@ -7,18 +8,18 @@ const rl = readline.createInterface({
 });
 
 export type QuestionOption = { optionDescription:string, action: () => Promise<void>}
-export type QuestionOptions = {[option:string]: QuestionOption}
 
-function toMap(options: QuestionOptions): Map<string, [string, () => Promise<void>]>{
-    return new Map(
-        Object
-            .entries(options)
+function toMap(options: QuestionOption[]): Map<string, () => Promise<void>>{
+    return new Map(options
             .map((entry) =>{
-            return [entry[0], [entry[1].optionDescription, entry[1].action]]
+            return [entry.optionDescription, entry.action]
         })) 
 }
 
 export class UserInterface {
+    end() {
+        rl.close();
+    }
     clear(){
        console.clear()
     }
@@ -31,37 +32,36 @@ export class UserInterface {
         console.log(str)
     }
 
-    async ask_question(question:string, options: QuestionOptions): Promise<void>{
+    async ask_question(question:string, options: QuestionOption[]): Promise<void>{
         return this.ask_question_internal(question, toMap(options))
     }
 
-    private async ask_question_internal(str:string, answers: Map<string, [string, () => Promise<void>]>): Promise<void>{
-        let question_with_opt = this.format_question(str, answers);
-        let result = await rl.question(question_with_opt);
-        let a = answers.get(result)
+    private async ask_question_internal(str:string, answers: Map<string, () => Promise<void>>): Promise<void>{
+
+        this.write_line("");
+       let choices = Array.from(answers.entries()).map(e => `${e[0]}`)
+
+       let result = await inquirer.prompt([{
+        type: 'list',
+        name: 'prompt',
+        message: str,
+        choices,
+       }]);
+       
+       console.log(result)
+        let a = answers.get(result.prompt)
         console.log(a)
         if (!a) {
             this.write_line("Unknown Answer - try again");
             await this.ask_question_internal(str, answers);
         }else {
             console.log("found option", a)
-            a[1]()
+            a()
         }
     }
 
     pause(time_seconds: number){
         return new Promise(resolve => setTimeout(resolve, time_seconds * 1000))
-    }
-
-
-    private format_question(question: string, answers: Map<string, [string, () => Promise<void>]>){
-        let optionsText = Array.from(answers.entries()).map(op => {
-            let optionKey = op[0];
-            let optionDescription = op[1][0];
-            return `[${optionKey}] - ${optionDescription}`;
-        });
-
-        return `\r\n${question}\r\n${optionsText.join("\r\n")}\r\n\r\n>`
     }
 }
 
