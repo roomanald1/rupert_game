@@ -52,7 +52,7 @@ import { Rooms } from "../game-state";
 
 export class Garden implements Room {
     async visit(engine: GameEngine): Promise<void> {
-        engine.user_interface.write_line("You are now in the Garden");
+        engine.user_interface.write_title("You are now in the Garden");
         engine.user_interface.write_line("Its a beautiful summers day, the birds are singing and the bees are buzzing around the lavendar hedge that leads down a path towards a water fountain")
         engine.user_interface.write_line("Beyond the fountain is a wooded area and left of the fountain is a stunning rose garden'")
 

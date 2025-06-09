@@ -73,7 +73,7 @@ export async function bookcase(state: GameState, user_interface: UserInterface) 
     
     export class Library implements Room {
         async visit(engine: GameEngine): Promise<void> {
-            engine.user_interface.write_line("You are now in the library");
+            engine.user_interface.write_title("You are now in the library");
             await engine.user_interface.ask_question("What would you like to do?",
                 [
                     { optionDescription: "Look at bookcase", action: async () => await this.look_at_bookcase(engine)  },
@@ -83,7 +83,7 @@ export async function bookcase(state: GameState, user_interface: UserInterface) 
         }    
 
         private async look_at_bookcase(engine:GameEngine){
-            await engine.user_interface.ask_question("What would you like to do?",
+            await engine.user_interface.ask_question("Which book would you like?",
                     [
                         { optionDescription: "Perfume 101 - A wizards guide", action: async () => this.look_at_bookcase(engine)  },
                         { optionDescription: "Bad Dad - David Walliams", action: async () => {

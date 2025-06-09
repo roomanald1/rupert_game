@@ -66,7 +66,7 @@ export class Cave implements Room {
             engine.user_interface.write_line("");
         }
 
-        engine.user_interface.write_line("You are now in the cave below the stairs");
+        engine.user_interface.write_title("You are now in the cave below the stairs");
         engine.user_interface.write_line("");
         engine.user_interface.write_line("On the left is another flight of stairs heading down");
         engine.user_interface.write_line("You look up and see a trapdoor!");

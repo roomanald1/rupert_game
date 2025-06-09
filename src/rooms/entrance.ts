@@ -59,7 +59,7 @@ import { Rooms } from "../game-state";
 
 export class Entrance implements Room {
     async visit(engine: GameEngine): Promise<void> {
-        engine.user_interface.write_line("You are in an entrance hall");
+        engine.user_interface.write_title("You are in an entrance hall");
         engine.user_interface.write_line("It's a grand room, decorated with lots of victorian features and a mooses head on the wall above a roaring fire")
         engine.user_interface.write_line("It has a set of sweeping stairs heading upwards, a set of double doors right ahead and another to the right marked 'Garden'")
 

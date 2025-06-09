@@ -57,7 +57,8 @@ export class GameEngine {
         this.user_interface.write_line(msg);
         this.user_interface.write_line("");
         this.user_interface.write_line("___________________")
-        this.user_interface.write_line("    GAME OVER")
+        
+        this.user_interface.write_line(figlet.textSync("GAME OVER", "Doom"))
         this.user_interface.write_line("___________________")
         this.user_interface.end()
     }

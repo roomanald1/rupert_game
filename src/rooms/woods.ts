@@ -3,7 +3,8 @@ import { Items, Rooms } from "../game-state";
 
 export class Woods implements Room {
     async visit(engine: GameEngine): Promise<void> {
-        engine.user_interface.write_line("You are now in the Woods\r\n\The woods are dense. Its dark.\r\n\You cannot see much. You hear a creepy howling from the far right.");
+        engine.user_interface.write_title("You are now in the Woods")
+        engine.user_interface.write_line("The woods are dense. Its dark.\r\n\You cannot see much. You hear a creepy howling from the far right.");
         await engine.user_interface.ask_question("What would you like to do?",
             [
                 { optionDescription: "This is too creepy. Head back to the garden", action: async () => engine.move_to_room(Rooms.garden) },

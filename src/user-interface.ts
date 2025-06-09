@@ -1,3 +1,4 @@
+import figlet from 'figlet';
 import inquirer from 'inquirer';
 import readline from 'readline/promises';
 
@@ -28,6 +29,10 @@ export class UserInterface {
         await rl.question("");
     }
 
+    write_title(str:string){
+        console.log(figlet.textSync(str, "Ogre"))
+    }
+
     write_line(str:string){
         console.log(str)
     }
@@ -38,7 +43,7 @@ export class UserInterface {
 
     private async ask_question_internal(str:string, answers: Map<string, () => Promise<void>>): Promise<void>{
 
-        this.write_line("");
+       this.write_line("");
        let choices = Array.from(answers.entries()).map(e => `${e[0]}`)
 
        let result = await inquirer.prompt([{
@@ -48,14 +53,11 @@ export class UserInterface {
         choices,
        }]);
        
-       console.log(result)
         let a = answers.get(result.prompt)
-        console.log(a)
         if (!a) {
             this.write_line("Unknown Answer - try again");
             await this.ask_question_internal(str, answers);
         }else {
-            console.log("found option", a)
             a()
         }
     }
