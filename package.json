@@ -25,14 +25,14 @@
     "figlet": "^1.8.1",
     "inquirer": "^12.6.3",
     "readline-promise": "^1.0.5",
-    "ts-node": "^10.9.2",
-    "tsc": "^2.0.4"
+    "ts-node": "^10.9.2"
   },
   "devDependencies": {
     "@rspack/cli": "^1.3.14",
     "@rspack/core": "^1.3.14",
     "@rspack/plugin-node-polyfill": "^0.5.8",
     "@types/node": "^22.15.29",
-    "ts-checker-rspack-plugin": "^1.1.3"
+    "ts-checker-rspack-plugin": "^1.1.3",
+    "typescript": "^5.8.3"
   }
 }

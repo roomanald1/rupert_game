@@ -1,38 +1,64 @@
 export enum Items {
-    sword,
-    key,
-    perfume_book,
-    spell_book
+    sword = "Sword",
+    key = "Key",
+    perfume_book = "Perfume Book",
+    spell_book = "Spell Book",
+    penny = "Penny"
 }
 
 export enum Rooms {
-    cave,
-    entrance,
-    garden,
-    library,
-    woods,
-    rose_garden
+    cave = "Cave",
+    entrance = "Entrance Hall",
+    garden = "Garden",
+    library = "Library",
+    woods = "Woods",
+    rose_garden= "Rose Garden",
+    bookcase = "Bookcase"
+}
+
+export enum Events{
+    defeat_wolves = "Defeat Wolves"
 }
 
 export class GameState {
+    event_occurred(event: Events): boolean {
+        return this._events_occurred.has(event);
+    }
 
-    private rooms_visited = new Set<Rooms>()
-    private items = new Set<Items>()
+    set_event_occurred(event: Events) {
+        this._events_occurred.add(event);
+    }
+    remove_item(item: Items) {
+        this._items.delete(item);
+    }
 
+    private _events_occurred = new Set<Events>();
+    private _rooms_visited = new Set<Rooms>();
+    private _items = new Set<Items>([Items.penny]);
+    private _current_room : Rooms;
+
+    get current_room(){
+        return this._current_room;
+    }
     update_rooms_visited(room:Rooms){
-        this.rooms_visited.add(room)
+        this._rooms_visited.add(room);
+        this._current_room = room;
     }
 
     has_visited_room(room:Rooms){
-        return this.rooms_visited.has(room);
+        return this._rooms_visited.has(room);
     }
 
     add_item(item:Items){
-        this.items.add(item)
+        this._items.add(item)
+    }
+
+    list_items(){
+        return Array.from(this._items);
     }
 
     has_item(item: Items){
-        return this.items.has(item)
+        return this._items.has(item)
     }
 }
 

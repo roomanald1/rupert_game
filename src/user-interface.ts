@@ -12,6 +12,7 @@ export type QuestionOption = { optionDescription:string, action: () => Promise<v
 
 function toMap(options: QuestionOption[]): Map<string, () => Promise<void>>{
     return new Map(options
+            .filter(_ => _)
             .map((entry) =>{
             return [entry.optionDescription, entry.action]
         })) 
