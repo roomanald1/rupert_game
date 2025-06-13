@@ -9,6 +9,7 @@ export class Entrance implements Room {
         if (from != Rooms.entrance) {
             engine.write_line("It's a grand room, decorated with lots of victorian features and a mooses head on the wall above a roaring fire")
             engine.write_line("It has a set of sweeping stairs heading upwards, a set of double doors right ahead and another to the right marked 'Garden'")
+            engine.write_line("and in the corner is tall, slightly gaunt man with silver streaked hair.")
         }
 
         await engine.prompt_options("What would you like to do?",
@@ -16,6 +17,7 @@ export class Entrance implements Room {
                 { optionDescription: "Walk up the stairs", action: async () => this.head_upstairs(engine) },
                 { optionDescription: "Open the door marked 'garden'", action: async () => this.garden(engine) },
                 { optionDescription: "Go through the double doors", action: () => this.double_doors(engine) },
+                { optionDescription: "Speak to the man", action: async () => engine.move_to_room(Rooms.KeeperOfStories) },
                 { optionDescription: !engine.has_visited_room(Rooms.cave) ? "Have a closer look at the moose" : "Enter the cave", action: () => this.look_at_moose(engine) },
             ]
         )

@@ -13,11 +13,16 @@ export enum Rooms {
     library = "Library",
     woods = "Woods",
     rose_garden= "Rose Garden",
-    bookcase = "Bookcase"
+    bookcase = "Bookcase",
+    KeeperOfStories = "Keeper Of Stories"
 }
 
 export enum Events{
-    defeat_wolves = "Defeat Wolves"
+    defeat_wolves = "Defeat Wolves",
+    KeeperOfStories_ask_name = "KeeperOfStories_ask_name",
+    pennyInTheFountain = "pennyInTheFountain",
+    KeeperOfStories_ask_help = "KeeperOfStories_ask_help",
+    opened_chest = "opened_chest"
 }
 
 export class GameState {

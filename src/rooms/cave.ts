@@ -1,5 +1,5 @@
 import { GameEngine, Room } from "../engine";
-import { Items, Rooms } from "../game-state";
+import { Events, Items, Rooms } from "../game-state";
 
 
 export class Cave implements Room {
@@ -10,6 +10,7 @@ export class Cave implements Room {
             engine.write_line(`In the crate is a shiny silver sword`)
             engine.write_line(`You pick it up and swing it from side to side - Its really heavy`)
             engine.pick_up_item(Items.sword)
+            engine.set_event_occurred(Events.opened_chest)
         } else {
             engine.write_line("No use for this item here");
         }

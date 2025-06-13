@@ -1,11 +1,12 @@
 import { GameEngine, Room } from "../engine";
-import { Items, Rooms } from "../game-state";
+import { Events, Items, Rooms } from "../game-state";
 
 export class Garden implements Room {
     async use_item(engine: GameEngine, item: Items): Promise<void> {
         if (item == Items.penny) {
             engine.write_line("You rummage through your pockets for a penny. You find one and flick it between you thumb and index finger into the fountain.....")
             engine.write_line("You take a closer look at the penny. And right next to it is a key. You pick up the key")
+            engine.set_event_occurred(Events.pennyInTheFountain)
             engine.pick_up_item(Items.key)
             engine.remove_item(Items.penny)
 
@@ -13,7 +14,6 @@ export class Garden implements Room {
             engine.write_line("No use for this item here");
         }
     }
-
 
     async visit(engine: GameEngine, from: Rooms): Promise<void> {
         if (from != Rooms.garden) {

@@ -3,7 +3,9 @@ import { Rooms } from "../game-state";
 import { Cave } from "./cave";
 import { Entrance } from "./entrance";
 import { Garden } from "./garden";
-import { Bookcase, Library } from "./library";
+import { Library } from "./library";
+import { KeeperOfStories } from "./KeeperOfStories";
+import { Bookcase } from "./Bookcase";
 import { RoseGarden } from "./rose_garden";
 import { Woods } from "./woods";
 
@@ -15,5 +17,6 @@ export const rooms = new Map<Rooms, Room>([
     [Rooms.woods, new Woods()],
     [Rooms.library, new Library()],
     [Rooms.bookcase, new Bookcase()],
+    [Rooms.KeeperOfStories, new KeeperOfStories()],
 ]
 );
