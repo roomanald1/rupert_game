@@ -21,8 +21,10 @@
   "homepage": "https://github.com/roomanald1/rupert_game#readme",
   "dependencies": {
     "@types/figlet": "^1.7.0",
+    "colorette": "^2.0.20",
     "console-png": "^1.2.1",
     "figlet": "^1.8.1",
+    "fs": "^0.0.1-security",
     "inquirer": "^12.6.3",
     "readline-promise": "^1.0.5",
     "ts-node": "^10.9.2"

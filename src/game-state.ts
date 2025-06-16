@@ -22,7 +22,8 @@ export enum Events{
     KeeperOfStories_ask_name = "KeeperOfStories_ask_name",
     pennyInTheFountain = "pennyInTheFountain",
     KeeperOfStories_ask_help = "KeeperOfStories_ask_help",
-    opened_chest = "opened_chest"
+    opened_chest = "opened_chest",
+    KeeperOfStories_SpeakToDoors = "KeeperOfStories_SpeakToDoors"
 }
 
 export class GameState {

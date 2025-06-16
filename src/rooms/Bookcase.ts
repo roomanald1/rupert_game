@@ -1,5 +1,6 @@
 import { Room, GameEngine } from "../engine";
 import { Items, Rooms } from "../game-state";
+import { questionOption } from "../user-interface";
 
 
 export class Bookcase implements Room {
@@ -10,24 +11,21 @@ export class Bookcase implements Room {
     async visit(engine: GameEngine, from: Rooms): Promise<void> {
         await engine.prompt_options("Which book would you like to take a closer look at?",
             [
-                !engine.has_item(Items.perfume_book) && {
-                    optionDescription: "Perfume 101 - A wizards guide", action: async () => {
+                !engine.has_item(Items.perfume_book) && questionOption( "Perfume 101 - A wizards guide", async () => {
                         engine.write_line("This looks like a perfume spell book. That might come in handy");
                         engine.pick_up_item(Items.perfume_book);
                         this.visit(engine, Rooms.bookcase);
                     }
-                },
-                {
-                    optionDescription: "Bad Dad - David Walliams", action: async () => {
+                ),
+                questionOption( "Bad Dad - David Walliams", async () => {
                         engine.write_line("Seriously? This book is less than useless");
                         this.visit(engine, Rooms.bookcase);
                     }
-                },
-                {
-                    optionDescription: "Return to Library", action: async () => {
+                ),
+                questionOption("Return to Library", async () => {
                         engine.move_to_room(Rooms.library);
                     }
-                }
+                )
             ]
         );
     }

@@ -1,10 +1,11 @@
 import figlet from "figlet";
 import { Events, GameState, Items, Rooms } from "./game-state";
-import { QuestionOption, UserInterface } from "./user-interface";
+import { questionOption, QuestionOption, UserInterface } from "./user-interface";
+import { green, italic, underline } from "colorette";
+import * as fs from 'fs';
 
 export abstract class Room {
     abstract visit(engine: GameEngine, from: Rooms): Promise<void>
-
     abstract use_item(engine: GameEngine, item: Items): Promise<void>
 }
 
@@ -31,21 +32,21 @@ export class GameEngine {
     }
     async start(init_room: Rooms) {
         this.user_interface.clear()
-        let welcome_msg = figlet.textSync("THE MANOR", "3D-ASCII")
-
         this.user_interface.write_line("******************************");
-        this.user_interface.write_line(welcome_msg);
+        this.user_interface.write_title("THE MANOR");
         this.user_interface.write_line("******************************");
         this.user_interface.write_line("");
         this.user_interface.write_line("");
         this.user_interface.write_line("You are lost, You have just a penny to your name. You have been walking for days. You find a grand manor in the distance");
         this.user_interface.write_line("On approaching the manor you find the door ajar. You are desperate for help so you walk in to see if anyone is around.");
 
-        this.user_interface.write_line("Press Enter to start");
-
-        await this.user_interface.wait_for_enter()
-
-        this.move_to_room(init_room)
+        await this.user_interface.ask_question("Main Menu", [
+            questionOption("Load", async () => {
+                this.state = JSON.parse(fs.readFileSync("save.game").toString('utf-8'))
+                this.move_to_room(this.state.current_room)
+            }),
+            questionOption("New", async () =>  this.move_to_room(init_room))
+        ])
     }
 
     async move_to_room(room_name: Rooms) {
@@ -77,21 +78,32 @@ export class GameEngine {
         this.clear_screen();
         let items = this.state.list_items();
         this.user_interface.write_title("INVENTORY");
+        this.user_interface.write_line(italic("Select an item from the list of collected items to use it in your current room"));
         this.user_interface.ask_question("Use Item?", [
-            ...items.map(i => ({
-                optionDescription: i.toString(), action: async () => {
+            ...items.map(i => (questionOption( i.toString(),  async () => {
                     let room = this.rooms.get(currentRoom);
                     await room.use_item(this, i);
                     await room.visit(this, this.current_room)
                 }
-            })),
-            { optionDescription: "Return to " + currentRoom, action: async () => await this.move_to_room(currentRoom) }
+            ))),
+            questionOption("Return to " + currentRoom, async () => await this.move_to_room(currentRoom) )
         ])
     }
 
+    prompt(question: string, answer: string){
+        return this.user_interface.ask_question_input(question, answer);
+    }
+
     prompt_options(question: string, options: QuestionOption[]) {
-        let base_options: QuestionOption[] = [{ optionDescription: "View Inventory", action: async () => { this.show_inventory(this.state.current_room) } }]
-        return this.user_interface.ask_question(question, [...options, ...base_options]);
+        let base_options: QuestionOption[] = [
+            {optionDescription: "Seperator", action : async () => {}, type : "seperator"},
+            questionOption("View Inventory", async () => { this.show_inventory(this.state.current_room) } ),
+            questionOption("Save Game",  async () => { this.save() } )
+        ]
+        return this.user_interface.ask_question(underline(green(question)), [...options, ...base_options]);
+    }
+    save() {
+        fs.writeFileSync("save.game", JSON.stringify(GameState))
     }
 
     has_item(item: Items) {
@@ -115,13 +127,8 @@ export class GameEngine {
         this.user_interface.write_line("___________________")
 
         this.user_interface.ask_question("Start again", [
-            {
-                optionDescription: "Yes", action: async () => {
-                    this.state = new GameState();
-                    this.move_to_room(Rooms.entrance);
-                }
-            },
-            { optionDescription: "No", action: async () => { this.user_interface.end() } }
+            questionOption("Yes", async () => this.move_to_room(Rooms.entrance)),
+            questionOption( "No",  async () => this.user_interface.end() )
         ])
     }
 }

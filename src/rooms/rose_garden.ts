@@ -1,6 +1,7 @@
 
 import { GameEngine, Room } from "../engine";
 import { Items, Rooms } from "../game-state";
+import { questionOption } from "../user-interface";
 
 export class RoseGarden implements Room {
     async use_item(engine: GameEngine, item: Items): Promise<void> {
@@ -9,7 +10,7 @@ export class RoseGarden implements Room {
     async visit(engine: GameEngine, from: Rooms): Promise<void> {
         await engine.prompt_options("What would you like to do?",
             [
-                { optionDescription: "Head back to the main garden", action: async () => engine.move_to_room(Rooms.garden) },
+                questionOption("Head back to the main garden", async () => engine.move_to_room(Rooms.garden)),
             ]
         )
     }

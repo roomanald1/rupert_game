@@ -1,5 +1,7 @@
+import { italic } from "colorette";
 import { GameEngine, Room } from "../engine";
 import { Events, Items, Rooms } from "../game-state";
+import { questionOption } from "../user-interface";
 
 
 export class Cave implements Room {
@@ -19,23 +21,23 @@ export class Cave implements Room {
     async visit(engine: GameEngine, from: Rooms): Promise<void> {
         if (from != Rooms.cave) {
             if (!engine.has_visited_room(Rooms.cave)) {
-                engine.write_line("You inspect the antlers of the moose. It doesn't look real. You reach out and touch the antler.");
-                engine.write_line("Hey, wait a minute, this antler is a lever. You pull it and it opens a door under the stairs.");
-                engine.write_line("You walk through the door.");
+                engine.write_line(italic("You inspect the antlers of the moose. It doesn't look real. You reach out and touch the antler."));
+                engine.write_line(italic("Hey, wait a minute, this antler is a lever. You pull it and it opens a door under the stairs."));
+                engine.write_line(italic("You walk through the door."));
                 engine.write_line("");
             }
             engine.write_line("");
-            engine.write_line("On the left is another flight of stairs heading down");
-            engine.write_line("You look up and see a trapdoor!");
-            engine.write_line("in front of you is an old beaten up crate");
+            engine.write_line(italic("On the left is another flight of stairs heading down"));
+            engine.write_line(italic("You look up and see a trapdoor!"));
+            engine.write_line(italic("in front of you is an old beaten up crate"));
         }
 
         await engine.prompt_options("What would you like to do?",
             [
-                { optionDescription: "Move back to Entrance", action: () => this.move_back_to_entrance(engine) },
-                !engine.has_item(Items.sword) && { optionDescription: "Inspect crate", action: async () => this.open_the_crate(engine) },
-                { optionDescription: "Inspect trapdoor", action: async () => { engine.write_line("TODO"); this.visit(engine, Rooms.cave) } },
-                { optionDescription: "Head down the stairs", action: async () => engine.move_to_room(Rooms.library) },
+                questionOption("Move back to Entrance", () => this.move_back_to_entrance(engine) ),
+                !engine.has_item(Items.sword) && questionOption("Inspect crate",  async () => this.open_the_crate(engine) ),
+                questionOption( "Inspect trapdoor", async () => { engine.write_line("TODO"); this.visit(engine, Rooms.cave) } ),
+                questionOption( "Head down the stairs", async () => engine.move_to_room(Rooms.library) ),
             ]
         )
     }
